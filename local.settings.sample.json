@@ -1,0 +1,8 @@
+{
+    "tenantId": "your-tenant-id-here",
+    "clientId": "clientid-of-app-registration-here",
+    "clientSecret": "clientsecret-of-app-registration-here",
+    "scope": "https://graph.microsoft.com/.default",
+    "siteUrl": "url-of-sharepoint-site-here",
+    "listName": "name-of-the-library-here"
+}
