@@ -4,7 +4,9 @@ class Graph
 
     <########## hidden/private members ##########>
 
-    static [string] $_retentionLabelName = "eSignature New"
+    # static [string] $_retentionLabelName = "SPO-Record-Locked-Until-Undeclared"
+    # static [string] $_retentionLabelName = "eSignature New"
+    static [string] $_retentionLabelName = "SPO-Record"
 
     <########## constructors ##########>
 
@@ -127,7 +129,10 @@ class Graph
         $body = @"
 {
   "retentionSettings": {
-    "isRecordLocked": true
+    "isRecordLocked": true,
+    "isDeleteAllowed": false,
+    "isMetadataUpdateAllowed": false,
+    "isContentUpdateAllowed": false
   }
 }
 "@
@@ -156,6 +161,17 @@ class Graph
         $statusCode = ""
 
         $response = Invoke-RestMethod -Uri $restUri -Method Patch -Body $body -Headers $Header -StatusCodeVariable "statusCode"
+
+        return $response
+    }
+
+    static [string] RemoveLabelOnDocument([string] $DriveId, [string] $DriveItemId, [hashtable] $Header)
+    {
+        $restUri = "https://graph.microsoft.com/v1.0/drives/$DriveId/items/$DriveItemId/retentionLabel"
+
+        $statusCode = ""
+
+        $response = Invoke-RestMethod -Uri $restUri -Method Delete -Headers $Header -StatusCodeVariable "statusCode"
 
         return $response
     }
