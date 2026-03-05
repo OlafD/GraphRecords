@@ -18,7 +18,7 @@ $graphDriveId = [Graph]::GetDriveIdByListname($graphSiteId, $settings.listName, 
 $graphDriveItemId = [Graph]::GetDriveItemIdByListItem($graphSiteId, $settings.listName, $itemId, $header)
 
 $getLabelResponse = [Graph]::GetRetentionLabel($graphDriveId, $graphDriveItemId, $header)
-# $labelResponse = [Graph]::SetRetentionLabel($graphDriveId, $graphDriveItemId, $retentionLabel, $header)
-$unlabelResponse = [Graph]::RemoveLabelOnDocument($graphDriveId, $graphDriveItemId, $header)
+
+$lockResponse = [Graph]::LockDocument($graphDriveId, $graphDriveItemId, $header)
 
 Write-Host

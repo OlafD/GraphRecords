@@ -5,8 +5,10 @@ class Graph
     <########## hidden/private members ##########>
 
     # static [string] $_retentionLabelName = "SPO-Record-Locked-Until-Undeclared"
+    static [string] $_retentionLabelName = "eSignature Test"
     # static [string] $_retentionLabelName = "eSignature New"
-    static [string] $_retentionLabelName = "SPO-Record"
+    # static [string] $_retentionLabelName = "SPO-Record"
+    # static [string] $_retentionLabelName = "eSignature retain"
 
     <########## constructors ##########>
 
@@ -129,10 +131,7 @@ class Graph
         $body = @"
 {
   "retentionSettings": {
-    "isRecordLocked": true,
-    "isDeleteAllowed": false,
-    "isMetadataUpdateAllowed": false,
-    "isContentUpdateAllowed": false
+    "isRecordLocked": true
   }
 }
 "@
@@ -172,6 +171,19 @@ class Graph
         $statusCode = ""
 
         $response = Invoke-RestMethod -Uri $restUri -Method Delete -Headers $Header -StatusCodeVariable "statusCode"
+
+        return $response
+    }
+
+    <# Administrative methods and functions using delegated permissions #>
+
+    static [object] ListRetentionLabels([hashtable] $Header)
+    {
+        $restUri = "https://graph.microsoft.com/v1.0/security/labels/retentionLabels?`$expand=retentionEventType"
+
+        $statusCode = ""
+
+        $response = Invoke-RestMethod -Uri $restUri -Method Get -Headers $Header -StatusCodeVariable "statusCode"
 
         return $response
     }

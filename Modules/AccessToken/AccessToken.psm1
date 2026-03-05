@@ -29,6 +29,19 @@ class AccessToken
         $this._accessToken = $response.access_token
     }
 
+    AccessToken([string] $ClientId, [string] $TenantId)
+    {
+        if ($this._haveMsalPsModule() -eq $true)
+        {
+            Clear-MsalTokenCache
+
+            $token = Get-MsalToken -TenantId $TenantId -ClientId $ClientId -Interactive
+
+            $this._accessToken = $token.AccessToken
+            $this._tokenType = $token.TokenType
+        }
+    }
+
     <########## public methods ##########>
 
     [string] GetTokenType()
@@ -51,4 +64,10 @@ class AccessToken
 
     <########## hidden/private methods ##########>
 
+    hidden [bool] _HaveMsalPsModule()
+    {
+        $haveMsalPsModule = $null -ne ( get-module -ListAvailable | Where-Object { $_.Name -like "Msal*" } )
+
+        return $haveMsalPsModule
+    }
 }

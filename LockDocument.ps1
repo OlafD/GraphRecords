@@ -2,14 +2,14 @@ using module Tools
 using module AccessToken
 using module Graph
 
-$itemId = "2"
+$itemId = "1"
 $retentionLabel = [Graph]::_retentionLabelName
 
 $settings = [Tools]::LoadSettings(".\local.settings.json")
 
-$secret = ConvertTo-SecureString $settings.clientSecret -AsPlainText -Force
+$secret = ConvertTo-SecureString $settings.appOnly.clientSecret -AsPlainText -Force
 
-$accessTokenObject = [AccessToken]::new($settings.clientId, $secret, $settings.tenantId, $settings.scope)
+$accessTokenObject = [AccessToken]::new($settings.appOnly.clientId, $secret, $settings.tenantId, $settings.appOnly.scope)
 
 $header = $accessTokenObject.GetAccessTokenAsHeader()
 
