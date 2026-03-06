@@ -5,10 +5,11 @@ class Graph
     <########## hidden/private members ##########>
 
     # static [string] $_retentionLabelName = "SPO-Record-Locked-Until-Undeclared"
-    static [string] $_retentionLabelName = "eSignature Test"
+    # static [string] $_retentionLabelName = "eSignature Test"
     # static [string] $_retentionLabelName = "eSignature New"
     # static [string] $_retentionLabelName = "SPO-Record"
     # static [string] $_retentionLabelName = "eSignature retain"
+    static [string] $_retentionLabelName = "Test-A1"
 
     <########## constructors ##########>
 
@@ -188,6 +189,39 @@ class Graph
         return $response
     }
 
+    static [object] DeleteRetentionLabel($RetentionLabelName, [hashtable] $Header)
+    {
+        $retentionLabelId = [Graph]::_GetRetentionLabelId($RetentionLabelName, $Header)
+
+        if ($retentionLabelId -ne "")
+        {
+            $restUri = "https://graph.microsoft.com/v1.0/security/labels/retentionLabels/$retentionLabelId"
+
+            $statusCode = ""
+
+            $response = Invoke-RestMethod -Uri $restUri -Method Delete -Headers $Header -StatusCodeVariable "statusCode"
+
+            return $response
+        }
+
+        return $null
+    }
+
     <########## hidden/private methods ##########>
 
+    static [string] _GetRetentionLabelId([string] $RetentionLabelName, [hashtable] $Header)
+    {
+        $result = ""
+
+        $response = [Graph]::ListRetentionLabels($Header)
+
+        $retentionLabel = $response.value | Where-Object { $_.displayName -eq $RetentionLabelName }
+
+        if ($null -ne $retentionLabel)
+        {
+            $result = $retentionLabel.id
+        }
+
+        return $result
+    }
 }
