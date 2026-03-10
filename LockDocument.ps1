@@ -2,7 +2,7 @@ using module Tools
 using module AccessToken
 using module Graph
 
-$itemId = "1"
+$itemId = "3"
 $retentionLabel = [Graph]::_retentionLabelName
 
 $settings = [Tools]::LoadSettings(".\local.settings.json")

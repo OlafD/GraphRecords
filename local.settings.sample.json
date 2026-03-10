@@ -1,8 +1,15 @@
 {
     "tenantId": "your-tenant-id-here",
-    "clientId": "clientid-of-app-registration-here",
-    "clientSecret": "clientsecret-of-app-registration-here",
-    "scope": "https://graph.microsoft.com/.default",
-    "siteUrl": "url-of-sharepoint-site-here",
-    "listName": "name-of-the-library-here"
+    "appOnly": {
+        "appName": "name-of-app-registration",
+        "clientId": "clientid-of-app-registration-here",
+        "clientSecret": "clientsecret-of-app-registration-here",
+        "scope": "https://graph.microsoft.com/.default"
+    },
+    "delegated": {
+        "appName": "name-of-app-registration",
+        "clientId": "clientid-of-app-registration-here"
+    },
+    "siteUrl": "url-of-SharePoint-site",
+    "listName": "name-of-library-where-documents-are-stored"
 }

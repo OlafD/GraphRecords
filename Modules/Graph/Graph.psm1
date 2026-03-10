@@ -76,7 +76,7 @@ class Graph
         return $response.id
     }
 
-    static [string] GetRetentionLabel([string] $DriveId, [string] $DriveItemId, [hashtable] $Header)
+    static [object] GetRetentionLabel([string] $DriveId, [string] $DriveItemId, [hashtable] $Header)
     {
         $restUri = "https://graph.microsoft.com/v1.0/drives/$DriveId/items/$DriveItemId/retentionLabel"
 
